@@ -127,12 +127,16 @@ def edit_post(post_id):
    
     if request.method == "POST" and form.validate_on_submit():
         post.title = form.title.data
-        post.teaser_image = form.teaser_image.data
         post.body = form.body.data.encode('utf-8')
-        print(post.body)
+        # Handle teaser image update
+        file = form.teaser_image.data
+        if file:
+            filename = secure_filename(file.filename)
+            file.save(path.join(python_cms.ROOT_PATH, "files_upload", filename))
+            post.teaser_image = filename
         post.save()  #Save to database
-        flash("Post successfully updated", "success")
+        flash(f"The post with title: {post.title} has been saved", "success")
        
-        return redirect(url_for("pages.view_post", post_id=post.id))
+        return redirect(url_for("pages.index"))
 
-    return render_template("create_post.html.j2", form=form, edit=True, post_id=post_id)
+    return render_template("edit_post.html.j2", form=form, post=post)

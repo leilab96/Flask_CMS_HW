@@ -82,7 +82,8 @@ main {
 }
 
 .btn-delete:hover,
-.btn-edit:hover {
+.btn-edit:hover,
+.btn-delete:hover {
   color: black;
 }
 
@@ -122,4 +123,17 @@ main {
 
 .button-container button {
   margin-right: 20px;
+}
+
+.hidden {
+  display: none;
+}
+
+#deleteImageBtn {
+  background-color: orange;
+  color: white;
+}
+
+.body-container {
+  margin-top: 20px;
 }

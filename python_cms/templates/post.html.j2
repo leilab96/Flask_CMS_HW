@@ -26,6 +26,7 @@
               Delete
       </button>
     </div>
+    
       {% endif %}
     </div>
     {% if post.teaser_image == "" %}
@@ -36,5 +37,7 @@
     {{ post.body|safe }}
   {% endif %}
 {% endblock %}
-
+{% block bodysource %}
+<script src="{{url_for('static', filename='post_function.js')}}"></script>
+{% endblock %}
 
