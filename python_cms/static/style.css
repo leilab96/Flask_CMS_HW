@@ -81,7 +81,8 @@ main {
   color: white;
 }
 
-.btn-delete:hover {
+.btn-delete:hover,
+.btn-edit:hover {
   color: black;
 }
 
@@ -92,7 +93,7 @@ main {
 .tooltip-bottom::after {
   content: attr(data-tooltip);
   position: absolute;
-  bottom: -30px;
+  bottom: -50px;
   left: 50%;
   transform: translateX(-50%);
   background-color: black;
@@ -107,4 +108,18 @@ main {
 
 .tooltip-bottom:hover::after {
   opacity: 1;
+}
+
+.btn-edit {
+  background-color: rgb(42, 42, 192);
+  color: white;
+}
+
+.button-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.button-container button {
+  margin-right: 20px;
 }

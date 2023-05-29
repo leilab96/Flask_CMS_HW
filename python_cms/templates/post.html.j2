@@ -5,14 +5,27 @@
   {% if post.id is not defined %}
     <h1>Post not found</h1>
   {% else %}
+    {% for message in get_flashed_messages() %}
+    <div class="toast toast-success">
+        <button class="btn btn-clear float-right"></button>
+          {{message}}
+    </div>
+    {% endfor %}
     <div class="post-header">
       <h1>{{ post.title }}</h1>
-      {% if current_user.is_authenticated %}{#delete button available only for logged in users#}
+    <div class="button-container">
+      {% if current_user.is_authenticated %}{#delete and edit button available only for logged in users#}
+      <button onclick="location.href='{{ url_for('pages.edit_post', post_id=post.id) }}'"
+              class="btn btn-edit tooltip-bottom"
+              data-tooltip="Edit this post">
+              Edit
+      </button>
       <button onclick="location.href='{{ url_for('pages.delete_post', post_id=post.id) }}'"
               class="btn btn-delete tooltip-bottom"
               data-tooltip="Permanently delete this post">
               Delete
       </button>
+    </div>
       {% endif %}
     </div>
     {% if post.teaser_image == "" %}
