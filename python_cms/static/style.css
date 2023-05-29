@@ -68,3 +68,43 @@ main {
 #createPost {
   margin-top: 20px;
 }
+
+.post-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 20px;
+}
+
+.btn-delete {
+  background-color: red;
+  color: white;
+}
+
+.btn-delete:hover {
+  color: black;
+}
+
+.tooltip-bottom {
+  position: relative;
+}
+
+.tooltip-bottom::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  bottom: -30px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: black;
+  color: white;
+  padding: 6px;
+  font-size: 14px;
+  border-radius: 4px;
+  opacity: 0;
+  transition: opacity 0.2s;
+  pointer-events: none;
+}
+
+.tooltip-bottom:hover::after {
+  opacity: 1;
+}

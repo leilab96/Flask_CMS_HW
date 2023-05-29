@@ -94,3 +94,19 @@ def upload():
   f.save(path.join(directory, f.filename))
   url = url_for('pages.files', filename=f.filename)
   return upload_success(url, filename=f.filename)  # return upload_success call
+
+@pages_blueprint.route("/post/delete/<string:post_id>", methods=["GET"])
+@login_required
+def delete_post(post_id):
+    post = PostModel.get(post_id)
+
+    if not post:
+        flash("Post not found", "error")
+        return redirect(url_for("pages.index"))
+
+    if current_user.id != post.author_id:
+        return "You are not authorized to delete this content", 403
+
+    post.delete()  
+    flash(f"The post with title: {post.title} has been permanently deleted", "success")
+    return redirect(url_for("pages.index"))

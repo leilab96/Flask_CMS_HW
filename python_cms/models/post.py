@@ -21,6 +21,7 @@ class PostModel(BaseModel):
   @classmethod
   def get(cls, post_id):
     return cls.query.filter_by(id=post_id).first()
+   
 
   @classmethod
   def get_all(cls):
@@ -29,3 +30,8 @@ class PostModel(BaseModel):
   def save(self):
     db.session.add(self)
     db.session.commit()
+
+  def delete(self):
+    db.session.delete(self)
+    db.session.commit()
+   
