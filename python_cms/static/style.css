@@ -27,7 +27,17 @@ main {
 }
 
 .article-card {
-  margin-top: 10px;
+  margin: 10px;
+}
+.promoted-card {
+  border: 2px solid blue;
+}
+
+.promoted-posts,
+.non-promoted-posts {
+  display: flex;
+  flex-wrap: wrap;
+  flex-grow: 1;
 }
 
 .article-image {
@@ -66,6 +76,10 @@ main {
 }
 
 #createPost {
+  margin-top: 20px;
+}
+
+#savePost {
   margin-top: 20px;
 }
 
@@ -131,8 +145,4 @@ main {
 #deleteImageBtn {
   background-color: orange;
   color: white;
-}
-
-.body-container {
-  margin-top: 20px;
 }

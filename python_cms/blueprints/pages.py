@@ -56,11 +56,11 @@ def create_post():
   if request.method == "POST" and form.validate_on_submit():
     # print(json.dumps(request.form, indent=2))
     body = request.form["body"]
-
     clean_body = sanitize_html(body)
 
     title = request.form["title"]
     user = current_user.get_id()
+    promoted = bool(request.form.get("promoted", False))
 
     file = request.files["teaser_image"]
 
@@ -73,7 +73,8 @@ def create_post():
     post = PostModel(title=title,
                      body=clean_body,
                      user_id=user,
-                     teaser_image=filename)
+                     teaser_image=filename,
+                     promoted=promoted)
     post.save()
     flash(f"Post with title: {title} created successfully", "success")
     return redirect(url_for("pages.create_post"))
@@ -122,13 +123,15 @@ def edit_post(post_id):
     post.body = post.body.decode('utf-8')
     if current_user.id != post.author_id:
         return "You are not authorized to edit this content", 403
-
+    
    
     form = PostForm(obj=post)  
-   
+    
     if request.method == "POST" and form.validate_on_submit():
         post.title = form.title.data
         post.body = form.body.data.encode('utf-8')
+        #is post promoted
+        post.promoted = bool(form.promoted.data)
         # Handle teaser image update
         file = form.teaser_image.data
         

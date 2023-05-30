@@ -34,6 +34,11 @@
     {{ form.body(class="form-input", placeholder="your article goes here", id='body') }}
     {{ form.submit(class="btn btn-primary input-group-btn float-right", id="createPost", value="Create Post") }}
     {{ ckeditor.config(name='body') }}
+    <label class="form-switch">
+      Promoted
+      {{ form.promoted(class="form-input") }}
+      <i class="form-icon"></i>
+    </label>
   </form>
 {% endblock %}
 {% block bodysource %}

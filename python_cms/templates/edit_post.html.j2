@@ -33,13 +33,17 @@
       {{ form.teaser_image(class="form-input") }}
     {% endif %}
     <br> 
-    <div class="body-container">
-        <label for="body">{{ form.body.label }}</label>
-        {{ form.body(class="form-input", placeholder="your article goes here", id='body') }}
-        {{ form.submit(class="btn btn-primary input-group-btn float-right", id="savePost", value="Save Post") }}
-        {{ ckeditor.config(name='body') }}
-    </div>
 
+    <label for="body">{{ form.body.label }}</label>
+    {{ form.body(class="form-input", placeholder="your article goes here", id='body') }}
+    {{ form.submit(class="btn btn-primary input-group-btn float-right", id="savePost", value="Save Post") }}
+    {{ ckeditor.config(name='body') }}
+
+    <label class="form-switch">
+      Promoted
+      {{ form.promoted(class="form-input") }}
+      <i class="form-icon"></i>
+    </label>
   </form>
 {% endblock %}
 {% block bodysource %}
