@@ -1,6 +1,7 @@
 from flask import Blueprint, render_template, request, redirect, send_from_directory, url_for, flash
 from flask_login import login_required
 from werkzeug.utils import secure_filename
+from werkzeug.datastructures import FileStorage
 from flask_ckeditor import upload_success, upload_fail
 from os import path
 import python_cms
@@ -130,10 +131,14 @@ def edit_post(post_id):
         post.body = form.body.data.encode('utf-8')
         # Handle teaser image update
         file = form.teaser_image.data
-        if file:
+        
+        if isinstance(file, FileStorage):
             filename = secure_filename(file.filename)
             file.save(path.join(python_cms.ROOT_PATH, "files_upload", filename))
             post.teaser_image = filename
+        else:
+           post.teaser_image = ""
+
         post.save()  #Save to database
         flash(f"The post with title: {post.title} has been saved", "success")
        

@@ -73,7 +73,6 @@ main {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin: 20px;
 }
 
 .btn-delete {
@@ -118,7 +117,7 @@ main {
 
 .button-container {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
 }
 
 .button-container button {
