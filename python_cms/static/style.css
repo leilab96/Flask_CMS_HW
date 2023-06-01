@@ -28,6 +28,7 @@ main {
 
 .article-card {
   margin: 10px;
+  padding: 10px;
 }
 .promoted-card {
   border: 2px solid blue;
@@ -76,11 +77,15 @@ main {
 }
 
 #createPost {
-  margin-top: 20px;
+  margin: 20px;
 }
 
 #savePost {
-  margin-top: 20px;
+  margin: 20px;
+}
+
+.category-container {
+  margin: 10px;
 }
 
 .post-header {
@@ -145,4 +150,12 @@ main {
 #deleteImageBtn {
   background-color: orange;
   color: white;
+}
+
+.category-stamp {
+  background-color: grey;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 20px;
+  display: inline-block;
 }

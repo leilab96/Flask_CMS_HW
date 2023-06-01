@@ -10,6 +10,7 @@ from bs4 import BeautifulSoup
 
 from python_cms.forms.post_form import PostForm
 from python_cms.models.post import PostModel
+from python_cms.models.category import CategoryModel
 
 pages_blueprint = Blueprint('pages', __name__)
 
@@ -53,14 +54,17 @@ def sanitize_html(value):
 @login_required
 def create_post():
   form = PostForm()
+  #populate form with categories
+  form.category.choices = [(category.id, category.name) for category in CategoryModel.get_all()]
   if request.method == "POST" and form.validate_on_submit():
-    # print(json.dumps(request.form, indent=2))
+ 
     body = request.form["body"]
     clean_body = sanitize_html(body)
-
+ 
     title = request.form["title"]
     user = current_user.get_id()
     promoted = bool(request.form.get("promoted", False))
+    category_id = int(request.form.get("category"))
 
     file = request.files["teaser_image"]
 
@@ -74,7 +78,9 @@ def create_post():
                      body=clean_body,
                      user_id=user,
                      teaser_image=filename,
-                     promoted=promoted)
+                     promoted=promoted,
+                     category_id=category_id
+                     )
     post.save()
     flash(f"Post with title: {title} created successfully", "success")
     return redirect(url_for("pages.create_post"))
@@ -124,14 +130,17 @@ def edit_post(post_id):
     if current_user.id != post.author_id:
         return "You are not authorized to edit this content", 403
     
-   
-    form = PostForm(obj=post)  
+    #populating the form
+    form = PostForm(obj=post)
+    form.category.choices = [(category.id, category.name) for category in CategoryModel.get_all()]
+    form.category.data = str(post.category_id)
     
     if request.method == "POST" and form.validate_on_submit():
         post.title = form.title.data
         post.body = form.body.data.encode('utf-8')
         #is post promoted
         post.promoted = bool(form.promoted.data)
+        post.category_id = request.form.get("category")
         # Handle teaser image update
         file = form.teaser_image.data
         
@@ -140,7 +149,7 @@ def edit_post(post_id):
             file.save(path.join(python_cms.ROOT_PATH, "files_upload", filename))
             post.teaser_image = filename
         else:
-           post.teaser_image = ""
+          post.teaser_image = ""
 
         post.save()  #Save to database
         flash(f"The post with title: {post.title} has been saved", "success")

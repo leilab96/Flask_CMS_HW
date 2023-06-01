@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, TextAreaField, SubmitField, BooleanField
+from wtforms import StringField, TextAreaField, SubmitField, BooleanField, RadioField
 from wtforms.validators import Length, InputRequired
 from flask_wtf.file import FileField, FileAllowed
 from flask_ckeditor import CKEditorField
@@ -35,3 +35,6 @@ class PostForm(FlaskForm):
       ])
   promoted = BooleanField("Promoted")
   submit = SubmitField(label="Create")
+  category = RadioField()
+  
+  

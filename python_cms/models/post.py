@@ -4,21 +4,25 @@ from python_cms.db import BaseModel, db
 
 
 class PostModel(BaseModel):
+   
   id = mapped_column(Integer, primary_key=True, autoincrement=True)
   title = mapped_column(String(80), nullable=False)
   teaser_image = mapped_column(String(80), nullable=False)
   body = mapped_column(String(8000), nullable=False)
   author_id = mapped_column(String(80), ForeignKey("users.id"), nullable=False)
   promoted = mapped_column(Boolean, default=False)
+  category_id = mapped_column(Integer, ForeignKey("category.id"), nullable=False)
 
   author = relationship("UserModel", back_populates="posts")
+  category = relationship("CategoryModel", back_populates="posts")
 
-  def __init__(self, title, body, user_id, teaser_image, promoted):
+  def __init__(self, title, body, user_id, teaser_image, promoted, category_id):
     self.title = title
     self.body = body
     self.author_id = user_id
     self.teaser_image = teaser_image
     self.promoted = promoted
+    self.category_id = category_id
 
   @classmethod
   def get(cls, post_id):
